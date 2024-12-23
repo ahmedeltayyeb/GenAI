@@ -3,6 +3,10 @@ from selenium.webdriver.chrome.service import Service
 
 
 def selenium_config():
+    '''
+    Configuration to be able to use selenium.
+    Important: change the path of the chrome driver.
+    '''
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
@@ -11,7 +15,8 @@ def selenium_config():
     )
 
     # Define the path to your chromedriver
-    chromedriver_path = "/Users/ahmedeltayyeb/Desktop/chromedriver"
+    # Download chrome driver from: https://googlechromelabs.github.io/chrome-for-testing/#stable, based on your version.
+    chromedriver_path = "/Users/ahmedeltayyeb/Downloads/chromedriver-mac-arm64/chromedriver"
 
     # Create a Service object
     service = Service(chromedriver_path)
