@@ -1,0 +1,26 @@
+Open the provided link and create a cover letter based on the role description: <job url>
+Use the template for the letter:
+
+Application “<name of the job>” 
+
+Dear Hiring Manager,
+
+I am putting down on this paper my strong interest in the <name of the job> position at <company name>. Combining experience with enthusiasm for <some good qualities for this role>, I have every reason to believe my skill set is aligned with the demands attached to the job.
+
+Since I was quite young, I had always been interested in <interests of the company>. This interest motivated me to pursue a degree in <Degree stated at the end> <State if ended ur still pursuing the degree>. During my academic journey, I have built a very strong foundation in <3 remarkable skills for this role>. I am very excited to bring my knowledge and skills from an academic perspective into seeing real, tangible results in a real-world setting. Work like this, dealing with the leading-edge solutions offered by <company name>, provides the perfect platform for this. My academic experience has been enriched by various group projects where I had the role of software engineer. Through those opportunities, I could further sharpen my skills in the fields of <another 3 skills for the job> and get a holistic view of a product development lifecycle. On this background, I am able to collaborate with cross-functional teams and contribute to the completion of projects on time.
+
+Of my proudest achievements, write 2 sentences about your project stated below>
+I have good command of the written and spoken <languages stated below>, which enables me to get in touch and work with diverse teams.
+
+One of the things that I find particularly appealing about <company name> is its reputation for <compliment to the company>. This commitment to innovation perfectly aligns with my drive to be leading-edge in <industry sphere of the company>. I am looking forward to contributing to a team that shares this passion and thrives on creating cutting-edge solutions.
+
+Thank you for considering my application. I will be more than happy to explain in more detail how my qualifications fit your particular needs. Please find attached herein my resume for your perusal.
+
+Sincerely,
+<name of the user stated below>
+
+Name: <Name of user>
+Degree: <Highest degree of user>, <Status of degree (currently pursuing / ended)>
+Languages: <Languages>
+Skills: <Skills>
+Project: <One user's project description>
