@@ -48,21 +48,15 @@ def login():
     if user['password'] != password:
         return jsonify({"error": "Invalid username or password"}), 401
 
-    # Retrieve the user ID
-    session['user_id'] = str(user['_id'])
 
+    return jsonify({"user_id": str(user['_id'])}), 200
 
-    return jsonify({"message": f"Welcome, {username}!"}), 200
-
-@auth.route('/logout', methods=['POST'])
-def logout():
-    # Clear the session
-    session.clear()
-    return jsonify({"message": "Logged out successfully"}), 200
 @auth.route('/delete_account', methods=['DELETE'])
 def delete_account():
-    # Get user_id from session
-    user_id = session.get('user_id')
+    
+    data = request.get_json()
+    user_id = data.get('user_id')
+
     if not user_id:
         return jsonify({"error": "Unauthorized. Please log in first."}), 401
 
@@ -71,9 +65,8 @@ def delete_account():
 
     # Delete user account
     users_collection.delete_one({"_id": user_id})
+    
     # Optionally, delete the user's CV information
     cv_collection.delete_many({"user_id": user_id})
 
-    # Clear the session after account deletion
-    session.clear()
     return jsonify({"message": "Account deleted successfully"}), 200    
