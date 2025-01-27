@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 
 def convert(path, debug=False):
     # we need api key here
+    load_dotenv()
     cloudconvert.configure(
         api_key=os.getenv("API_KEY"),
         sandbox=True)
