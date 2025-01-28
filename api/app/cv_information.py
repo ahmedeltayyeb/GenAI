@@ -16,7 +16,7 @@ def create_cv():
     user_info = {
         "user_id": user_id,
         "name": 'default' if data.get('name') is None else data.get('name'),
-        "age": 0  if data.get('age') is None else data.get('age'),
+        "age": '0'  if data.get('age') is None else data.get('age'),
         "description": 'default' if data.get('description') is None else data.get('description'),
         "country": 'default' if data.get('country') is None else data.get('country'),
         "education": 'default' if data.get('education') is None else data.get('education'),
@@ -35,7 +35,7 @@ def create_cv():
 
     return jsonify({"message": "CV info added  successfully"}), 201
 
-@cvinfo.route('/edit_cv', methods=['PUT'])
+@cvinfo.route('/edit', methods=['PUT'])
 def edit_cv():
     data = request.get_json()
     user_id = data.get('user_id')
