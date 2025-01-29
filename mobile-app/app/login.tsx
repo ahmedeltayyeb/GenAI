@@ -7,7 +7,7 @@ import { useRouter } from "expo-router";
 export default function Login() {
     const [isLogin, setIsLogin] = useState<boolean>(true);
     const [loading, setLoading] = useState<boolean>(false);
-    const API_BASE = 'http://13.48.59.49:5000';
+    const API_BASE = 'http://13.51.204.72:5000';
     const router = useRouter();
 
     const onAuth = (email: string, password: string) => {
@@ -35,7 +35,25 @@ export default function Login() {
         }
 
         const checkSignUp = async () => {
-            // TODO
+            try{
+                const response = await fetch(API_BASE+'/auth/signup', {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({username: email, password: password})
+                });
+
+                if (response.status == 200)
+                {
+                    const data = await response.json();
+                    await AsyncStorage.setItem("user_id", data.user_id)
+                    router.replace("/profile");
+                }
+            }
+            finally{
+                setLoading(false);
+            }
         }
 
         setLoading(true);
