@@ -24,7 +24,7 @@ def signup():
     result = users_collection.insert_one({"username": username, "password": password})
     user_id = str(result.inserted_id)
 
-    return jsonify({"message": "User signed up successfully", "user_id": user_id}), 201
+    return jsonify({"message": "User signed up successfully", "user_id": user_id}), 200
 
 
 # Login Route
