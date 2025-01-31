@@ -9,21 +9,21 @@ interface ProfileFormProps {
 }
 
 const ProfileForm: React.FC<ProfileFormProps> = ({ onSubmit, loading }) => {
-  const [name, setName] = useState('');
-  const [age, setAge] = useState('');
-  const [description, setDescription] = useState('');
+  const [name, setName] = useState<string>('');
+  const [age, setAge] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
   const [countryCode, setCountryCode] = useState('');
-  const [country, setCountry] = useState('');
+  const [country, setCountry] = useState<string>('');
   const [showCountryPicker, setShowCountryPicker] = useState(false);
-  const [education, setEducation] = useState('');
-  const [institution, setInstitution] = useState('');
-  const [experience, setExperience] = useState('');
-  const [skills, setSkills] = useState('');
-  const [languages, setLanguages] = useState('');
-  const [jobCategories, setJobCategories] = useState('');
+  const [education, setEducation] = useState<string>('');
+  const [institution, setInstitution] = useState<string>('');
+  const [experience, setExperience] = useState<string>('');
+  const [skills, setSkills] = useState<string>('');
+  const [languages, setLanguages] = useState<string>('');
+  const [jobCategories, setJobCategories] = useState<string>('');
 
   const handleSubmit = () => {
-    onSubmit({ name, age, description, /* ... other profile fields */ });
+    onSubmit({ name, age, description, country, education, institution, experience, skills, languages, jobCategories});
   };
 
   return (

@@ -3,32 +3,35 @@ import { StyleSheet, View, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ProfileForm from './components/ProfileForm';
+import Constants from 'expo-constants';
 
 export default function Profile() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const API_BASE = Constants.expoConfig?.extra?.API_URL;
+  const handleProfileSubmit = ({name, age, description, country, education, institution, experience, skills, languages, jobCategories}: {name:string, age:string, description:string, country:string, education:string, institution:string, experience:string, skills:string, languages:string, jobCategories:string}) => {
+    const dataSubmit = async () => {
+      try{
+        const user_id = await AsyncStorage.getItem('user_id');
+        const response = await fetch(API_BASE+'/cvinfo/create', {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({user_id: user_id, name: name, age: age, description: description, country: country, education: education, experience: experience, skills: skills, languages: languages, categories: jobCategories})
+        })
 
-  const handleProfileSubmit = async (profileData: any) => {
-    setLoading(true);
-    try {
-      const keys = await AsyncStorage.getAllKeys();
-      const profileKey = keys.find(key => key.startsWith('profile-'));
-      const email = profileKey ? profileKey.replace('profile-', '') : null;
-
-      if (!email) {
-        Alert.alert('Error', 'No email found. Please sign up again.');
+        if (response.status == 200)
+        {
+          router.replace("/home");
+        }
+        
+      } finally{
         setLoading(false);
-        return;
       }
-      await AsyncStorage.setItem(`profile-${email}`, 'true');
-      router.replace('/home');
-    } catch (error) {
-      console.error("Error completing profile:", error);
-      Alert.alert('Error', 'An error occurred completing your profile.');
-    } finally {
-      setLoading(false);
     }
-  };
+    dataSubmit();
+  }
 
   return (
     <View style={styles.container}>

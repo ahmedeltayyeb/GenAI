@@ -3,11 +3,12 @@ import AuthForm from "./components/AuthForm";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { View, StyleSheet, Button } from 'react-native'
 import { useRouter } from "expo-router";
+import Constants from "expo-constants";
 
 export default function Login() {
     const [isLogin, setIsLogin] = useState<boolean>(true);
     const [loading, setLoading] = useState<boolean>(false);
-    const API_BASE = 'http://13.51.204.72:5000';
+    const API_BASE = Constants.expoConfig?.extra?.API_URL;
     const router = useRouter();
 
     const onAuth = (email: string, password: string) => {
