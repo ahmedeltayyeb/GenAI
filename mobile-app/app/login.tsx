@@ -1,5 +1,5 @@
 import { useState } from "react";
-import AuthForm from "./components/AuthForm";
+import AuthForm from "@/components/AuthForm";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { View, StyleSheet, Button } from 'react-native'
 import { useRouter } from "expo-router";
@@ -26,7 +26,7 @@ export default function Login() {
                 {
                     const data = await response.json();
                     await AsyncStorage.setItem('user_id', data.user_id);
-                    router.replace("/home");
+                    router.replace("/(tabs)/home");
                 }
                 
             }
@@ -49,7 +49,7 @@ export default function Login() {
                 {
                     const data = await response.json();
                     await AsyncStorage.setItem("user_id", data.user_id)
-                    router.replace("/profile");
+                    router.replace("/profile-init");
                 }
             }
             finally{

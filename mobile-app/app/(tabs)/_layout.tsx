@@ -8,6 +8,9 @@ import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
@@ -16,8 +19,8 @@ export default function TabLayout() {
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
+        //tabBarButton: HapticTab,
+        //tabBarBackground: TabBarBackground,
         tabBarStyle: Platform.select({
           ios: {
             // Use a transparent background on iOS to show the blur effect
@@ -27,24 +30,24 @@ export default function TabLayout() {
         }),
       }}>
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
           title: 'Home',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="myapps"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: 'My applications',
+          tabBarIcon: ({ color }) => <FontAwesome5 name="file-alt" size={28} color={color} />,
         }}
       />
       <Tabs.Screen
-        name="test"
+        name="profile"
         options={{
-          title: 'Test',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.circle.fill" color={color} />
+          title: 'Profile',
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="face-man" size={28} color={color} />
         }}
       />
     </Tabs>
