@@ -1,8 +1,11 @@
-from flask import Flask, request, Blueprint
+from flask import Flask, request, Blueprint, jsonify
+from scraping import scrape_main
 
 scrape = Blueprint('scrape', __name__)
 
 @scrape.route("/job", methods=['POST'])
 def search_job():
-    data = request.get_json()
+    input = request.get_json()
+    content = scrape_main.scrape_job(input.get('search'), input.get('location'))
+    return jsonify(content), 200
 
