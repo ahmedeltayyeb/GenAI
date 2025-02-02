@@ -62,7 +62,7 @@ def job_url_to_content(job_link, driver, json_path):
         print(f"Error navigating to URL: {job_link}")
 
     # Wait for the elements to load
-    WebDriverWait(driver, 60).until(
+    WebDriverWait(driver, 20).until(
         EC.presence_of_all_elements_located((By.CLASS_NAME, "job-ad-display-11k0r7z"))
     )
     

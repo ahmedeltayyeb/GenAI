@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-export default function SearchBar({searchSubmit}: {searchSubmit: (query: string) => void}) {
+export default function SearchBar({searchSubmit, setSearchVisible}: {searchSubmit: (query: string) => void, setSearchVisible: (val: boolean) => void}) {
   const [query, setQuery] = useState('');
 
   const handleSearch = () => {
+    setSearchVisible(false);
     searchSubmit(query);
   }
 

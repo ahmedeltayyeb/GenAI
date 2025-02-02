@@ -1,21 +1,26 @@
 import SearchBar from "@/components/SearchBar";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Modal } from "react-native";
 import { useRouter } from 'expo-router';
+import { useState } from "react";
 
 export default function Home() {
+    const [searchVisible, setSearchVisible] = useState(true);
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
     
     const searchSubmit = () => {
-        router.replace("/job-results")
+        
     }
     
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Your next job opportunity awaits</Text>
-            <View style={styles.searchBarContainer}>
-                <SearchBar searchSubmit={searchSubmit}/>
+        <Modal visible={searchVisible} animationType="slide">
+            <View style={styles.container}>
+                <Text style={styles.title}>Your next job opportunity awaits</Text>
+                <View style={styles.searchBarContainer}>
+                    <SearchBar searchSubmit={searchSubmit} setSearchVisible={setSearchVisible}/>
+                </View>
             </View>
-        </View>
+        </Modal>
     )
 }
 
