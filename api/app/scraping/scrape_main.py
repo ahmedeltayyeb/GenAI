@@ -8,18 +8,18 @@ def scrape_job(search, location):
     driver = selenium_config()
     try:
         url = generate_url(search, location)
-        job_links = generate_job_url_list(url, driver)
-        titles = job_url_to_title(job_links, "data/url_title.json")
+        links_dict = generate_job_url_list(url, driver)
+        titles = job_url_to_title(links_dict["link_elements"], "data/url_title.json")
 
         # URL will be based on the url of the job, which the user wants to generate a cv for.
         # This should only be for the LLM whihc generates the CV.
         # Url used is just for testing
         contents = {}
         cnt = 0
-        for link in job_links:
-            contents[cnt] = job_url_to_content(link.get_attribute("href")
+        for link in links_dict["links"]:
+            contents[cnt] = job_url_to_content(link
                            , driver, "data/job_content.json")
-            cnt += 1;
+            cnt += 1
         
         
         result = {}

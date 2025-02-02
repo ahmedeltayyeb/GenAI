@@ -1,3 +1,4 @@
+import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -28,7 +29,11 @@ def generate_job_url_list(desired_url, driver):
     )
     # Get the url of the jobs in this page
     link_elements = driver.find_elements(By.CLASS_NAME, "res-1foik6i")
-    return link_elements
+
+    links = []
+    for link in link_elements:
+         links.append(link.get_attribute("href"))
+    return {"links": links, "link_elements": link_elements}
 
 
 def job_url_to_title(job_links, json_path):
@@ -55,24 +60,39 @@ def job_url_to_content(job_link, driver, json_path):
         driver.get(job_link)
     except:
         print(f"Error navigating to URL: {job_link}")
-   
-    #close_button = WebDriverWait(driver, 20).until(
-    #    EC.element_to_be_clickable((By.CLASS_NAME, "login-registration-provider-8m7aqb"))
-    #)
-
-    #close_button.click()
-    #print("Overlay closed successfully.")
 
     # Wait for the elements to load
     WebDriverWait(driver, 60).until(
         EC.presence_of_all_elements_located((By.CLASS_NAME, "job-ad-display-11k0r7z"))
     )
+    
 
     # Scrape job details
-    company_name = driver.find_element(By.CSS_SELECTOR, "#JobAdContent > div > div > div > div > div > div > div > div.js-listing-header.job-ad-display-kyg8or > article > div > div.job-ad-display-n10qeq > div > div.job-ad-display-1t26un2 > div > ul > li.at-listing__list-icons_company-name.job-ad-display-1f4i9zs > a > span.job-ad-display-11k0r7z > span").text
-    full_part = driver.find_element(By.CSS_SELECTOR, "#JobAdContent > div > div > div > div > div > div > div > div.js-listing-header.job-ad-display-kyg8or > article > div > div.job-ad-display-n10qeq > div > div.job-ad-display-1t26un2 > div > ul > li.at-listing__list-icons_work-type.job-ad-display-1f4i9zs > span > span.job-ad-display-11k0r7z > span").text
-    published = driver.find_element(By.CSS_SELECTOR,"#JobAdContent > div > div > div > div > div > div > div > div.js-listing-header.job-ad-display-kyg8or > article > div > div.job-ad-display-n10qeq > div > div.job-ad-display-1t26un2 > div > ul > li.at-listing__list-icons_date.job-ad-display-1f4i9zs > span > span.job-ad-display-11k0r7z > span").text
-    published = published[11:]
+    #company_name = driver.find_element(By.CSS_SELECTOR, "#JobAdContent > div > div > div > div > div > div > div > div.js-listing-header.job-ad-display-kyg8or > article > div > div.job-ad-display-n10qeq > div > div.job-ad-display-1t26un2 > div > ul > li.at-listing__list-icons_company-name.job-ad-display-1f4i9zs > a > span.job-ad-display-11k0r7z > span").text
+    #full_part = driver.find_element(By.CSS_SELECTOR, "#JobAdContent > div > div > div > div > div > div > div > div.js-listing-header.job-ad-display-kyg8or > article > div > div.job-ad-display-n10qeq > div > div.job-ad-display-1t26un2 > div > ul > li.at-listing__list-icons_work-type.job-ad-display-1f4i9zs > span > span.job-ad-display-11k0r7z > span").text
+    #published = driver.find_element(By.CSS_SELECTOR,"#JobAdContent > div > div > div > div > div > div > div > div.js-listing-header.job-ad-display-kyg8or > article > div > div.job-ad-display-n10qeq > div > div.job-ad-display-1t26un2 > div > ul > li.at-listing__list-icons_date.job-ad-display-1f4i9zs > span > span.job-ad-display-11k0r7z > span").text
+    #published = published[11:]
+    company_name = ""
+    full_part = ""
+    date = ""
+    try:
+        company_name = WebDriverWait(driver, 3).until(
+            EC.visibility_of_element_located((By.CSS_SELECTOR, "#JobAdContent > div > div > div > div > div > div > div > div.js-listing-header.job-ad-display-kyg8or > article > div > div.job-ad-display-n10qeq > div > div.job-ad-display-1t26un2 > div > ul > li.at-listing__list-icons_company-name.job-ad-display-1f4i9zs > a > span.job-ad-display-11k0r7z > span"))
+        ).text
+    except: print("Error pulling the company name")
+    
+    try:
+        full_part = WebDriverWait(driver, 3).until(
+            EC.visibility_of_element_located((By.CSS_SELECTOR, "#JobAdContent > div > div > div > div > div > div > div > div.js-listing-header.job-ad-display-kyg8or > article > div > div.job-ad-display-n10qeq > div > div.job-ad-display-1t26un2 > div > ul > li.at-listing__list-icons_work-type.job-ad-display-1f4i9zs > span > span.job-ad-display-11k0r7z > span"))
+        ).text
+    except: print("Error pulling the full/part time")
+
+    try:
+        date = WebDriverWait(driver, 3).until(
+            EC.visibility_of_element_located((By.CSS_SELECTOR, "#JobAdContent > div > div > div > div > div > div > div > div.js-listing-header.job-ad-display-kyg8or > article > div > div.job-ad-display-n10qeq > div > div.job-ad-display-1t26un2 > div > ul > li.at-listing__list-icons_date.job-ad-display-1f4i9zs > span > span.job-ad-display-11k0r7z > span"))
+        ).text
+        date = date[11:]
+    except: print("Error pulling the publish date")
 
     # Scrape the job description
     spans = driver.find_elements(By.CLASS_NAME, "job-ad-display-1cat3iu")
@@ -82,7 +102,7 @@ def job_url_to_content(job_link, driver, json_path):
     content_dict = {
         "Company name" : company_name,
         "Full or Part time?" : full_part,
-        "Date published" : published,
+        "Date published" : date,
         "Content of job description": content
     }
 
