@@ -8,9 +8,11 @@ def create_app():
 
     from .auth import auth
     from .cv_information import cvinfo
+    from .scraping_api import scrape
+
     app.register_blueprint(auth, url_prefix='/auth')  # Routes under /auth
     app.register_blueprint(cvinfo, url_prefix='/cvinfo')
-
+    app.register_blueprint(scrape, url_prefix='/scrape')
     # MongoDB Configuration
     app.config["MONGO_URI"] = "mongodb://localhost:27017/GenAi"  # Replace with your MongoDB URI if using Atlas
     app.secret_key = "your_secret_key"  # Required for session management

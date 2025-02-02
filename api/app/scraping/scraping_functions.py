@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from utils import save_to_json
+from .utils import save_to_json
 
 
 def generate_url(user_job_title, user_location):
@@ -23,7 +23,7 @@ def generate_job_url_list(desired_url, driver):
     # Open the desired URL
     driver.get(desired_url)
     # Wait for the elements to load
-    WebDriverWait(driver, 10).until(
+    WebDriverWait(driver, 25).until(
         EC.presence_of_all_elements_located((By.CLASS_NAME, "res-1foik6i"))
     )
     # Get the url of the jobs in this page
@@ -42,7 +42,7 @@ def job_url_to_title(job_links, json_path):
             job_title = link.find_element(By.CLASS_NAME, "res-nehv70")
             url_title[job_link] = job_title.text
 
-        save_to_json(url_title, json_path)
+        #save_to_json(url_title, json_path)
         print(f"Scraped {len(url_title)} jobs. Results saved to 'data/url_title.json'.")
         return url_title
 
@@ -50,9 +50,21 @@ def job_url_to_content(job_link, driver, json_path):
     '''
     Takes the link of the job which the user wants to generate the CV and/or cover letter for and produces an output whihc could be used by the LLM
     '''
-    driver.get(job_link)
+    print(job_link)
+    try:
+        driver.get(job_link)
+    except:
+        print(f"Error navigating to URL: {job_link}")
+   
+    #close_button = WebDriverWait(driver, 20).until(
+    #    EC.element_to_be_clickable((By.CLASS_NAME, "login-registration-provider-8m7aqb"))
+    #)
+
+    #close_button.click()
+    #print("Overlay closed successfully.")
+
     # Wait for the elements to load
-    WebDriverWait(driver, 10).until(
+    WebDriverWait(driver, 60).until(
         EC.presence_of_all_elements_located((By.CLASS_NAME, "job-ad-display-11k0r7z"))
     )
 
@@ -74,5 +86,5 @@ def job_url_to_content(job_link, driver, json_path):
         "Content of job description": content
     }
 
-    save_to_json(content_dict, json_path)
+    #save_to_json(content_dict, json_path)
     return content_dict

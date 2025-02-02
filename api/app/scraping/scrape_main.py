@@ -1,5 +1,5 @@
-from scraping import generate_job_url_list, generate_url, job_url_to_title, job_url_to_content
-from config import selenium_config
+from .scraping_functions import generate_job_url_list, generate_url, job_url_to_title, job_url_to_content
+from .config import selenium_config
 
 PARAMETER_FILE = "params.yaml"
 
@@ -15,21 +15,24 @@ def scrape_job(search, location):
         # This should only be for the LLM whihc generates the CV.
         # Url used is just for testing
         contents = {}
-        
-        for i in range(len(titles)):
-            contents[i] = job_url_to_content(titles[i]
+        cnt = 0
+        for link in job_links:
+            contents[cnt] = job_url_to_content(link.get_attribute("href")
                            , driver, "data/job_content.json")
+            cnt += 1;
         
         
         result = {}
-        for i in range(len(titles)):
-            result[i] = {
-                "title": contents[i]["Company name"],
-                "company": contents[i]["Company name"],
-                "full_part": contents[i]["Full or Part time?"],
-                "date": contents[i]["Date published"],
-                "description": contents[i]["Content of job description"]
+        cnt = 0
+        for title in titles.values():
+            result[cnt] = {
+                "title": title,
+                "company": contents[cnt]["Company name"],
+                "full_part": contents[cnt]["Full or Part time?"],
+                "date": contents[cnt]["Date published"],
+                "description": contents[cnt]["Content of job description"]
             }
+            cnt += 1
 
         return result
     finally:
