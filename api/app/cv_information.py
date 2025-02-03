@@ -8,7 +8,7 @@ cvinfo = Blueprint('cvinfo', __name__)
 def create_cv():
     data = request.get_json()
     user_id = data.get('user_id')
-    
+
     if not user_id:
         return jsonify({"error": "Unauthorized. No user id provided"}), 401
 
@@ -20,6 +20,8 @@ def create_cv():
         "description": 'default' if data.get('description') is None else data.get('description'),
         "country": 'default' if data.get('country') is None else data.get('country'),
         "education": 'default' if data.get('education') is None else data.get('education'),
+        "institution": 'default' if data.get('institution') is None else data.get('institution'),
+        "degree": 'default' if data.get('degree') is None else data.get('degree'),
         "experience": 'default' if data.get('experience') is None else data.get('experience'),
         "skills": 'default' if data.get('skills') is None else data.get('skills'),
         "languages": 'default' if data.get('languages') is None else data.get('languages'),
@@ -33,7 +35,7 @@ def create_cv():
 
     cv_collection.insert_one(user_info)
 
-    return jsonify({"message": "CV info added  successfully"}), 201
+    return jsonify({"message": "CV info added  successfully"}), 200
 
 @cvinfo.route('/edit', methods=['PUT'])
 def edit_cv():

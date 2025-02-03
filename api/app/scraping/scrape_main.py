@@ -26,6 +26,7 @@ def scrape_job(search, location):
         cnt = 0
         for title in titles.values():
             result[cnt] = {
+                "url": contents[cnt]["url"],
                 "title": title,
                 "company": contents[cnt]["Company name"],
                 "full_part": contents[cnt]["Full or Part time?"],

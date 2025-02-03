@@ -28,7 +28,13 @@ export default function Login() {
                     await AsyncStorage.setItem('user_id', data.user_id);
                     router.replace("/(tabs)/home");
                 }
+                else{
+                    router.replace("/error");
+                }
                 
+            }
+            catch{
+                router.replace("/error")
             }
             finally{
                 setLoading(false);
@@ -51,6 +57,9 @@ export default function Login() {
                     await AsyncStorage.setItem("user_id", data.user_id)
                     router.replace("/profile-init");
                 }
+            }
+            catch{
+                router.replace("/error")
             }
             finally{
                 setLoading(false);

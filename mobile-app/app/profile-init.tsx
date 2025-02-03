@@ -9,7 +9,7 @@ export default function Profile() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const API_BASE = Constants.expoConfig?.extra?.API_URL;
-  const handleProfileSubmit = ({name, age, description, country, education, institution, experience, skills, languages, jobCategories}: {name:string, age:string, description:string, country:string, education:string, institution:string, experience:string, skills:string, languages:string, jobCategories:string}) => {
+  const handleProfileSubmit = ({name, age, description, country, education, institution, degree, experience, skills, languages, jobCategories}: {name:string, age:string, description:string, country:string, education:string, institution:string, degree: string, experience:string, skills:string, languages:string, jobCategories:string}) => {
     const dataSubmit = async () => {
       try{
         const user_id = await AsyncStorage.getItem('user_id');
@@ -18,15 +18,22 @@ export default function Profile() {
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({user_id: user_id, name: name, age: age, description: description, country: country, education: education, experience: experience, skills: skills, languages: languages, categories: jobCategories})
+          body: JSON.stringify({user_id: user_id, name: name, age: age, description: description, country: country, education: education, institution: institution, degree: degree, experience: experience, skills: skills, languages: languages, categories: jobCategories})
         })
 
         if (response.status == 200)
         {
           router.replace("/(tabs)/home");
         }
+        else{
+          router.replace("/error")
+        }
         
-      } finally{
+      } 
+      catch{
+        router.replace("/error")
+      }
+      finally{
         setLoading(false);
       }
     }

@@ -100,6 +100,7 @@ def job_url_to_content(job_link, driver, json_path):
     content = "\n".join(all_texts)
 
     content_dict = {
+        "url": job_link,
         "Company name" : company_name,
         "Full or Part time?" : full_part,
         "Date published" : date,
