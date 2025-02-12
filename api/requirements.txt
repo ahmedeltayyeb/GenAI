@@ -1,1 +1,7 @@
 Flask==3.1.0
+pymongo==4.11
+Flask-PyMongo==3.0.1
+Flask-Cors==5.0.0
+webdriver-manager==4.0.2
+openai
+selenium==4.28.1
