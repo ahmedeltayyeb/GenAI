@@ -47,7 +47,7 @@ def cvLatex():
     )
     
     response = completion.choices[0].message.content
-
+    print(response)
     latex_pattern = r"```latex\n(.*?)\n```"
 
     latex_content = re.search(latex_pattern, response, re.DOTALL)
